@@ -58,7 +58,7 @@ def login():
         # Check if account exists using MySQL
         print(username,password)
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute(f'''SELECT * FROM ACCOUNT_DB.ACCOUNTS WHERE USERNAME = '{str(username)}' AND PASSWORD = '{password}';''')
+        cursor.execute(f'''SELECT * FROM ACCOUNTS WHERE USERNAME = '{str(username)}' AND PASSWORD = '{password}';''')
         # Fetch one record and return result
         account = cursor.fetchone()
         print(account)
@@ -89,7 +89,7 @@ def register():
         email = request.form['email']
                 # Check if account exists using MySQL
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('''SELECT * FROM accounts WHERE username = '%s';'''%(username))
+        cursor.execute('''SELECT * FROM ACCOUNTS WHERE username = '%s';'''%(username))
         account = cursor.fetchone()
         # If account exists show error and validation checks
         if account:
@@ -102,7 +102,7 @@ def register():
             msg = 'Please fill out the form!'
         else:
             # Account doesnt exists and the form data is valid, now insert new account into accounts table
-            cursor.execute('''INSERT INTO ACCOUNT_DB.ACCOUNTS(USERNAME,PASSWORD,EMAIL) VALUES ( '%s', to_base64('%s'), '%s');'''%(username,password,email))
+            cursor.execute('''INSERT INTO ACCOUNTS(USERNAME,PASSWORD,EMAIL) VALUES ( '%s', to_base64('%s'), '%s');'''%(username,password,email))
             mysql.connection.commit()
             msg = 'You have successfully registered!'
     elif request.method == 'POST':
