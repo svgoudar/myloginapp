@@ -120,9 +120,12 @@ def register():
         elif not username or not password or not email:
             msg = 'Please fill out the form!'
         else:
-            dtime=datetime.now()
+	    now = datetime.now()
+#             dtime=datetime.now()
+	    date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
+	%m/%d/%Y, %H:%M:%S"
             # Account doesnt exists and the form data is valid, now insert new account into accounts table
-            cur.execute('''INSERT INTO ACCOUNTS(USERNAME,PASSWORD,EMAIL,CREATED_ON) VALUES ( '%s', '%s', '%s','%d');'''%(username,password,email,dtime))
+            cur.execute('''INSERT INTO ACCOUNTS(USERNAME,PASSWORD,EMAIL,CREATED_ON) VALUES ( '%s', '%s', '%s','%d');'''%(username,password,email,date_time))
             cur.commit()
             msg = 'You have successfully registered!'
     elif request.method == 'POST':
