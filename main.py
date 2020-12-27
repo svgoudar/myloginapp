@@ -14,10 +14,11 @@ app = Flask(__name__)
 app.secret_key = '1a2b3c4d5e'
 
 # Enter your database connection details below
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'SANJUmysql483'
-app.config['MYSQL_DB'] = 'ACCOUNT_DB'
+# app.config['MYSQL_HOST'] = 'localhost'
+# app.config['MYSQL_USER'] = 'root'
+# app.config['MYSQL_PASSWORD'] = 'SANJUmysql483'
+# app.config['MYSQL_DB'] = 'ACCOUNT_DB'
+app.config['DB_URL'] = os.getenv("DB_CONN")
 # db = SQLAlchemy(app)
 
 mysql = MySQL()
