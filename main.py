@@ -83,7 +83,7 @@ def login():
         if account:
             # Create session data, we can access this data in other routes
             session['loggedin'] = True
-            session['id'] = account['USER_ID']
+#             session['id'] = account['USER_ID']
             session['username'] = account['USERNAME']
             # Redirect to home page
             return redirect(url_for('home'))
