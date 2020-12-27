@@ -4,7 +4,6 @@ import MySQLdb.cursors
 # from pymysql import cursors
 import re
 import base64
-from forms import RegistrationForm
 import os
 
 
