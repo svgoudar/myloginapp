@@ -4,6 +4,7 @@ import MySQLdb.cursors
 # from pymysql import cursors
 import re
 import base64
+import db
 import os
 
 
@@ -12,24 +13,16 @@ app = Flask(__name__)
 
 # Change this to your secret key (can be anything, it's for extra protection)
 app.secret_key = '1a2b3c4d5e'
-
-
-# app.config['MYSQL_DATABASE_USER'] = 'bc71a3b40d6715'
-# app.config['MYSQL_DATABASE_PASSWORD'] = 'c0124eb5'
-# app.config['MYSQL_DATABASE_DB'] = 'heroku_360389a98465754'
-# app.config['MYSQL_DATABASE_HOST'] = 'us-cdbr-iron-east-05.cleardb.net'
-
-
-# Enter your database connection details below
-# app.config['MYSQL_HOST'] = 'localhost'
-# app.config['MYSQL_USER'] = 'root'
-# app.config['MYSQL_PASSWORD'] = 'SANJUmysql483'
-# app.config['MYSQL_DB'] = 'ACCOUNT_DB'
-app.config['CLEARDB_DATABASE_URLL'] = os.getenv("DB_CONN")
-# db = SQLAlchemy(app)
-
+# MySQL configurations
+app.config['MYSQL_DATABASE_USER'] = 'b44f47c62c8d3e'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'f0c81fd0'
+app.config['MYSQL_DATABASE_DB'] = 'heroku_0728eba485451c8'
+app.config['MYSQL_DATABASE_HOST'] = 'us-cdbr-east-02.cleardb.com'
 mysql = MySQL()
 mysql.init_app(app)
+
+db.DB_CONF()
+
 
 # Intialize MySQL
 
