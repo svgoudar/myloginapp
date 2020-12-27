@@ -53,7 +53,7 @@ def login():
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
         # Create variables for easy access
         username = request.form['username']
-        password = encode_password(request.form['password'])
+        password = request.form['password']
         # print(password)
         # Check if account exists using MySQL
         print(username,password)
