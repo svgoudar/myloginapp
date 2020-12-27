@@ -40,7 +40,6 @@ connection = psycopg2.connect(user="sxflbeuumpoxid",
 cur = connection.cursor()
 # cur.execute("SELECT * FROM ACCOUNTS;")
 
-print(cur.fetchone())
 
 # Intialize MySQL
 
