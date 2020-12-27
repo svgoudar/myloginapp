@@ -18,7 +18,7 @@ app.secret_key = '1a2b3c4d5e'
 # app.config['MYSQL_USER'] = 'root'
 # app.config['MYSQL_PASSWORD'] = 'SANJUmysql483'
 # app.config['MYSQL_DB'] = 'ACCOUNT_DB'
-app.config['DB_URL'] = os.getenv("DB_CONN")
+app.config['JAWSDB_URL'] = os.getenv("DB_CONN")
 # db = SQLAlchemy(app)
 
 mysql = MySQL()
