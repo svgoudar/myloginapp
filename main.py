@@ -1,28 +1,46 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-from flask_mysqldb import MySQL
-import MySQLdb.cursors
+# from flask_mysqldb import MySQL
+# import MySQLdb.cursors
 # from pymysql import cursors
+import psycopg2
+from datetime import datetime
+
 import re
 import base64
 import db
 import os
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
 
 
 
 app = Flask(__name__)
 
 # Change this to your secret key (can be anything, it's for extra protection)
-# app.secret_key = '1a2b3c4d5e'
+app.secret_key = '1a2b3c4d5eABCDE'
 # MySQL configurations
-app.config['MYSQL_DATABASE_USER'] = 'admin'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'SVGmaster483'
-app.config['MYSQL_DATABASE_DB'] = 'ACCOUNT_DB'
-app.config['MYSQL_DATABASE_HOST'] = 'my-db.cqqwf49htgq1.us-east-2.rds.amazonaws.com'
-mysql = MySQL()
-mysql.init_app(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+# app.config['SECRET_KEY'] = 'SVGmaster483'
+# app.config['MYSQL_DATABASE_DB'] = 'ACCOUNT_DB'
+# app.config['MYSQL_DATABASE_HOST'] = 'my-db.cqqwf49htgq1.us-east-2.rds.amazonaws.com'
+# mysql = MySQ
+# mysql.init_app(app)
 
 # db.DB_CONF()
 
+connection = psycopg2.connect(user="sxflbeuumpoxid",
+                              password="a92972339779fd8a058b5558540df78185203310faa8a05bf6031bef4a07430f",
+                              host="ec2-35-172-246-19.compute-1.amazonaws.com",
+                              port="5432",
+                              database="da8mke9e8qna4a")
+
+
+# db = SQLAlchemy(app)
+# migrate = Migrate(app,db)
+cur = connection.cursor()
+# cur.execute("SELECT * FROM ACCOUNTS;")
+
+print(cur.fetchone())
 
 # Intialize MySQL
 
@@ -57,10 +75,10 @@ def login():
         # print(password)
         # Check if account exists using MySQL
         print(username,password)
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute(f'''SELECT * FROM ACCOUNT_DB.ACCOUNTS WHERE USERNAME = '{str(username)}' AND PASSWORD = '{password}';''')
+        # cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cur.execute(f'''SELECT * FROM ACCOUNTS WHERE USERNAME = '{str(username)}' AND PASSWORD = '{password}';''')
         # Fetch one record and return result
-        account = cursor.fetchone()
+        account = cur.fetchone()
         print(account)
                 # If account exists in accounts table in out database
         if account:
@@ -88,9 +106,9 @@ def register():
         password = request.form['password']
         email = request.form['email']
                 # Check if account exists using MySQL
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('''SELECT * FROM ACCOUNT_DB.ACCOUNTS WHERE username = '%s';'''%(username))
-        account = cursor.fetchone()
+        # cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cur.execute('''SELECT * FROM ACCOUNTS WHERE USERNAME = '%s';'''%(username))
+        account = cur.fetchone()
         # If account exists show error and validation checks
         if account:
             msg = 'Account already exists!'
@@ -101,9 +119,10 @@ def register():
         elif not username or not password or not email:
             msg = 'Please fill out the form!'
         else:
+            dtime=datetime.now()
             # Account doesnt exists and the form data is valid, now insert new account into accounts table
-            cursor.execute('''INSERT INTO ACCOUNT_DB.ACCOUNTS(USERNAME,PASSWORD,EMAIL) VALUES ( '%s', '%s', '%s');'''%(username,password,email))
-            mysql.connection.commit()
+            cur.execute('''INSERT INTO ACCOUNTS(USERNAME,PASSWORD,EMAIL,CREATED_ON) VALUES ( '%s', '%s', '%s','%d');'''%(username,password,email,dtime))
+            cur.commit()
             msg = 'You have successfully registered!'
     elif request.method == 'POST':
         # Form is empty... (no POST data)
