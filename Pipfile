@@ -27,7 +27,9 @@ Werkzeug = "==1.0.1"
 WTForms = "==2.3.3"
 gunicorn = "*"
 pymysql = "*"
-mysql-connector = "~=2.1.7"
+flask-migrate = "*"
+flask-sqlalchemy = "*"
+psycopg2 = "*"
 
 [dev-packages]
 
