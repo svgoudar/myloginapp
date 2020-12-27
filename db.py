@@ -25,12 +25,12 @@ def DB_CONF():
                              PRIMARY KEY (`USER_ID`)
     ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=UTF8MB4;
     '''
-    sample_insert = '''INSERT INTO ACCOUNTS(USERNAME,PASSWORD,EMAIL) VALUES ( 'sanjeev', 'sanju123', 'sanju123@gmail.com'); '''
+    # sample_insert = '''INSERT INTO ACCOUNTS(USERNAME,PASSWORD,EMAIL) VALUES ( 'sanjeev', 'sanju123', 'sanju123@gmail.com'); '''
     cur = cnx.cursor()
     # cur.execute(create_db)
     # cur.execute(use_db)
     cur.execute(create_table)
-    cur.execute(sample_insert)
+    # cur.execute(sample_insert)
     cur.close()
     cnx.close()
     return "DB CONFIGURED SUCCESSFULLY"
