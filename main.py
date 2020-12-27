@@ -14,10 +14,10 @@ app = Flask(__name__)
 # Change this to your secret key (can be anything, it's for extra protection)
 # app.secret_key = '1a2b3c4d5e'
 # MySQL configurations
-app.config['MYSQL_DATABASE_USER'] = 'b44f47c62c8d3e'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'f0c81fd0'
-app.config['MYSQL_DATABASE_DB'] = 'heroku_0728eba485451c8'
-app.config['MYSQL_DATABASE_HOST'] = 'us-cdbr-east-02.cleardb.com'
+app.config['MYSQL_DATABASE_USER'] = 'admin'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'SVGmaster483'
+app.config['MYSQL_DATABASE_DB'] = 'ACCOUNT_DB'
+app.config['MYSQL_DATABASE_HOST'] = 'my-db.cqqwf49htgq1.us-east-2.rds.amazonaws.com'
 mysql = MySQL()
 mysql.init_app(app)
 
@@ -58,7 +58,7 @@ def login():
         # Check if account exists using MySQL
         print(username,password)
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute(f'''SELECT * FROM heroku_0728eba485451c8.ACCOUNTS WHERE USERNAME = '{str(username)}' AND PASSWORD = '{password}';''')
+        cursor.execute(f'''SELECT * FROM ACCOUNT_DB.ACCOUNTS WHERE USERNAME = '{str(username)}' AND PASSWORD = '{password}';''')
         # Fetch one record and return result
         account = cursor.fetchone()
         print(account)
@@ -89,7 +89,7 @@ def register():
         email = request.form['email']
                 # Check if account exists using MySQL
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('''SELECT * FROM heroku_0728eba485451c8.ACCOUNTS WHERE username = '%s';'''%(username))
+        cursor.execute('''SELECT * FROM ACCOUNT_DB.ACCOUNTS WHERE username = '%s';'''%(username))
         account = cursor.fetchone()
         # If account exists show error and validation checks
         if account:
@@ -102,7 +102,7 @@ def register():
             msg = 'Please fill out the form!'
         else:
             # Account doesnt exists and the form data is valid, now insert new account into accounts table
-            cursor.execute('''INSERT INTO heroku_0728eba485451c8.ACCOUNTS(USERNAME,PASSWORD,EMAIL) VALUES ( '%s', '%s', '%s');'''%(username,password,email))
+            cursor.execute('''INSERT INTO ACCOUNT_DB.ACCOUNTS(USERNAME,PASSWORD,EMAIL) VALUES ( '%s', '%s', '%s');'''%(username,password,email))
             mysql.connection.commit()
             msg = 'You have successfully registered!'
     elif request.method == 'POST':
