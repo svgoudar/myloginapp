@@ -5,10 +5,16 @@ mysql = MySQL()
 # MySQL configurations
 from mysql.connector import connection,cursor
 
+
 def DB_CONF():
+    # ssl = {'cert': 'ssl/b44f47c62c8d3e-cert.pem', 'key': 'b44f47c62c8d3e-key.pem'}
     cnx = connection.MySQLConnection(user='b44f47c62c8d3e', password='f0c81fd0',
                                      host='us-cdbr-east-02.cleardb.com',
-                                     database='heroku_0728eba485451c8')
+                                     database='heroku_0728eba485451c8',
+                                     ssl_ca='ssl/cleardb-ca.pem',
+                                     ssl_cert='ssl/b44f47c62c8d3e-cert.pem',
+                                     ssl_key='ssl/b44f47c62c8d3e-key.pem')
+
     create_db = '''CREATE DATABASE IF NOT EXISTS `ACCOUNT_DB` DEFAULT CHARACTER SET UTF8MB4 COLLATE UTF8MB4_general_ci;'''
     use_db = '''USE `ACCOUNT_DB`;'''
     create_table = '''CREATE TABLE IF NOT EXISTS `ACCOUNTS` (
