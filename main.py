@@ -79,16 +79,19 @@ def login():
         # cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cur.execute(f'''SELECT * FROM ACCOUNTS WHERE USERNAME = '{str(username)}' AND PASSWORD = '{password}';''')
         # Fetch one record and return result
-        account = cur.fetchone()
+	tupm = cur.fetchone()
+        tupl = ("user_id", "username", "password", "email", "created_on")
+        account = dict(zip(tupl, tupm))
+#         account = cur.fetchone()
         print(account)
                 # If account exists in accounts table in out database
-        if account:
+        if tupm:
             # Create session data, we can access this data in other routes
-            session['loggedin'] = True
-#             session['id'] = account['USER_ID']
-#             session['username'] = account['USERNAME']
+            ssession['loggedin'] = True
+            session['id'] = account['user_id']
+            session['username'] = account['username']
             # Redirect to home page
-            return redirect(url_for('home'))
+            return redirect(url_for('home'),username=session['username'])
         else:
             # Account doesnt exist or username/password incorrect
             msg = 'Incorrect username/password!'
