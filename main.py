@@ -75,6 +75,7 @@ def login():
         password = request.form['password']
         # print(password)
         # Check if account exists using MySQL
+	
         print(username,password)
         # cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cur.execute(f'''SELECT * FROM ACCOUNTS WHERE USERNAME = '{str(username)}' AND PASSWORD = '{password}';''')
